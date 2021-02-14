@@ -3,7 +3,6 @@ import settings from '../config/settings';
 import Pagination from "@material-ui/lab/Pagination";
 
 const axios = require('axios').default;
-
 const {apiBaseURL} = settings;
 
 class Challenge extends React.Component {
@@ -18,6 +17,9 @@ class Challenge extends React.Component {
             rowCount: 0
         };
         this.alert = React.createRef();
+    }
+
+    componentDidMount() {
         this.fetchResultsCount();
         this.fetchResults();
     }
@@ -38,7 +40,7 @@ class Challenge extends React.Component {
         this.setState(state => ({...state, rowCount: 0}));
 
         axios.get(`${apiBaseURL}/challenge/Waterdance/nextCount`)
-            .then(resp => this.setState(state => ({...state, rowCount: resp.data})))
+            .then(resp => this.setState(state => ({...state, rowCount: resp.data[0].count})))
             .catch(this.handleError.bind(this));
     }
 

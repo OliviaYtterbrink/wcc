@@ -48,13 +48,28 @@ const championsPlayed = function (session, user) {
         ).then(result => result.records.map(r => ({
             champion: r.get('champion'),
             date: r.get('date'),
-            position: r.get('position'),
-            win: r.get('win')
+            win: r.get('win'),
+            position: r.get('position')
+    })));
+};
+
+// get champions played count
+const championsPlayedCount = function (session, user) {
+    return session.readTransaction(txc =>
+        txc.run(
+            `MATCH (s:Summoner)-[:DOING]->(c:Challenge)
+            WHERE s.name = $summoner AND c.name = $challenge AND c.completed = false
+            MATCH (c)-[:PLAYED]-(g:Game)-[:AS]->(champ:Champion)
+            RETURN count(champ) as count`,
+            {summoner: user, challenge: `Waterdance Champion Challenge`})
+        ).then(result => result.records.map(r => ({
+            count: r.get('count')
     })));
 };
 
 module.exports = {
     championsToPlayNext: championsToPlayNext,
+    championsToPlayNextCount: championsToPlayNextCount,
     championsPlayed: championsPlayed,
-    championsToPlayNextCount: championsToPlayNextCount
+    championsPlayedCount: championsPlayedCount
 };

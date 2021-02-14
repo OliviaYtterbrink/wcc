@@ -49,6 +49,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 api.get("/challenge/:summoner/next", routes.challenge.getNext);
 api.get("/challenge/:summoner/nextCount", routes.challenge.getNextCount);
 api.get("/challenge/:summoner/results", routes.challenge.championsPlayed);
+api.get("/challenge/:summoner/playedCount", routes.challenge.playedCount);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
@@ -65,7 +66,5 @@ api.use(function (err, req, res, next) {
 
 const port = process.env.PORT || 5000;
 app.listen(port);
-
-console.log(`Password generator listening on ${port}`);
 
 module.exports = app;

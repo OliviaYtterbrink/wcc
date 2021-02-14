@@ -21,11 +21,13 @@ class Results extends React.Component {
             ]
         };
         this.alert = React.createRef();
+    }
+
+    componentDidMount() {
         this.fetchResults();
     }
 
     fetchResults() {
-        //axios.get(`${apiBaseURL}/challenge/${this.props.user}/results`)
         axios.get(`${apiBaseURL}/challenge/Waterdance/results`)
              .then(resp => this.setState(state => ({...state, games: resp.data})))
              .catch(this.handleError.bind(this))
