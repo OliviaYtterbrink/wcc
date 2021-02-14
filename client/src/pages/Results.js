@@ -86,7 +86,12 @@ class Results extends React.Component {
                 <h1>Waterdance Champion Challenge</h1>
                 <table id='students'>
                     <tbody>
-                        <tr>{this.renderTableHeader()}</tr>
+                        <tr>
+                            <th key='0'>CHAMPION</th>
+                            <th key='1'>DATE</th>
+                            <th key='2'>WIN</th>
+                            <th key='3'>POSITION</th>
+                        </tr>
                         {this.renderTableData()}
                     </tbody>
                 </table>
