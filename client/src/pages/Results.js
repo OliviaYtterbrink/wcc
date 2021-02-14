@@ -59,9 +59,9 @@ class Results extends React.Component {
      renderWin(win) {
         let icon;
         if (win) {
-            icon = <CheckCircleIcon fontSize="inherit"/>
+            icon = <CheckCircleIcon style={{ color: 'green' }} fontSize="inherit"/>
         } else {
-            icon = <CancelIcon fontSize="inherit"/>
+            icon = <CancelIcon style={{ color: 'red' }} fontSize="inherit"/>
         }
         return icon;
      }
