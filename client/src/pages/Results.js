@@ -2,6 +2,7 @@ import React from 'react';
 import settings from '../config/settings';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Pagination from "@material-ui/lab/Pagination";
 
 const axios = require('axios').default;
 
@@ -18,27 +19,52 @@ class Results extends React.Component {
                 { champion: 'Ahri', date: '2021/01/27 14:05', win: false, position: 'Mid' },
                 { champion: 'Alistar', date: '2021/01/27 14:34', win: false, position: 'Support' },
                 { champion: 'Amumu', date: '2021/01/29 16:03', win: true, position: 'Jungle' }
-            ]
+            ],
+            page: 1,
+            rowCount: 0,
+            resultPerPage: 20
         };
         this.alert = React.createRef();
     }
 
     componentDidMount() {
+        this.fetchResultsCount();
         this.fetchResults();
     }
 
+    pageCount() {
+        return Math.ceil(this.state.rowCount / this.state.resultPerPage);
+    }
+
+    skipCount() {
+        return (this.state.page - 1) * this.state.resultPerPage;
+    }
+
+    limitCount() {
+        return this.state.resultPerPage;
+    }
+
+    fetchResultsCount() {
+        this.setState(state => ({...state, rowCount: 0}));
+
+        axios.get(`${apiBaseURL}/challenge/Waterdance/playedCount`)
+            .then(resp => this.setState(state => ({...state, rowCount: resp.data[0].count})))
+            .catch(this.handleError.bind(this));
+    }
+
     fetchResults() {
-        axios.get(`${apiBaseURL}/challenge/Waterdance/results`)
-             .then(resp => this.setState(state => ({...state, games: resp.data})))
-             .catch(this.handleError.bind(this))
-             .finally(() => this.setState(state => ({...state, searchInProgress: false})));
+        axios.get(`${apiBaseURL}/challenge/Waterdance/results`,
+            {params: {skip: this.skipCount(), limit: this.limitCount()}})
+            .then(resp => this.setState(state => ({...state, games: resp.data})))
+            .catch(this.handleError.bind(this))
+            .finally(() => this.setState(state => ({...state, searchInProgress: false})));
     }
 
     handleChangePage(event, newPage) {
         this.setState(
             state => ({...state, page: newPage}),
             () => {
-                this.fetchMatches();
+                this.fetchResults();
             }
         );
     }
@@ -97,6 +123,15 @@ class Results extends React.Component {
                         {this.renderTableData()}
                     </tbody>
                 </table>
+            </div>
+            <div>
+                <Pagination
+                    color="primary"
+                    count={this.pageCount()}
+                    siblingCount={1}
+                    page={this.state.page}
+                    onChange={this.handleChangePage.bind(this)}
+                />
             </div>
         </>
     }
