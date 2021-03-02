@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProgressBar = (props) => {
-    const { bgcolor, completed } = props;
+    const { bgcolor, completed, done, total } = props;
 
     const containerStyles = {
         height: 20,
@@ -27,9 +27,10 @@ const ProgressBar = (props) => {
 
     return (
         <div style={containerStyles}>
-        <div style={fillerStyles}>
-            <span style={labelStyles}>{`${completed}%`}</span>
-        </div>
+            <div style={fillerStyles}>
+                <span style={labelStyles}>{`${completed}%`}</span>
+            </div>
+            <h4 style={{width: '100%', textAlign: 'right'}}>Played {done}/{total} champions</h4>
         </div>
     );
 };
