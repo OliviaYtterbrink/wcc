@@ -12,6 +12,7 @@ class About extends React.Component {
             searchInProgress: false,
             remainCount: 0,
             playedCount: 0,
+            champCount: 0,
             completed: 0
         };
         this.alert = React.createRef();
@@ -58,7 +59,7 @@ class About extends React.Component {
                 let played = parseInt(this.state.playedCount);
                 let total = remain + played;
                 let completed = Math.round((played/total)*1000)/10;
-                this.setState(state => ({...state, completed: completed}));
+                this.setState(state => ({...state, completed: completed, champCount: total}));
             }).catch(this.handleError.bind(this));
     }
 
@@ -67,6 +68,7 @@ class About extends React.Component {
             <div>
                 <h2>Waterdance is doing her own personal challenge of playing every League of Legends Champion at least once with no repeats and in alphabetical order! Started 1/27/2021!</h2>
                 <ProgressBar key='progress' bgcolor="#6a1b9a" completed={this.state.completed} />
+                <div style={{width: '95%', textAlign: 'right'}}><h4>Played {this.state.playedCount}/{this.state.champCount} champions</h4></div>
                 <h3>Unless advice is asked for, please keep your thoughts on builds to yourself. This challenge is not concerned with playing every champion perfectly.</h3>
             </div>
         </>
