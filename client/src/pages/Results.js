@@ -101,12 +101,53 @@ class Results extends React.Component {
               <tr key={champion}>
                  <td>{champion}</td>
                  <td>{date}</td>
-                 <td>{this.renderWin(win)}</td>
-                 <td>{position}</td>
+                 <td style={{textAlign: 'right'}}>{position}</td>
               </tr>
            )
         })
      }
+
+     render() {
+        return <>
+            <div>
+                <h1>Waterdance Champion Challenge</h1>
+                <table id='students'>
+                    <tbody>
+                        <tr>
+                            <th key='0'>CHAMPION</th>
+                            <th key='1'>DATE</th>
+                            <th key='2'>POSITION</th>
+                        </tr>
+                        {this.renderTableData()}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <Pagination
+                    color="primary"
+                    count={this.pageCount()}
+                    siblingCount={1}
+                    page={this.state.page}
+                    onChange={this.handleChangePage.bind(this)}
+                />
+            </div>
+        </>
+    }
+
+    /*
+    renderTableData() {
+        return this.state.games.map((game, index) => {
+            const { champion, date, win, position } = game //destructuring
+            return (
+                <tr key={champion}>
+                    <td>{champion}</td>
+                    <td>{date}</td>
+                    <td>{this.renderWin(win)}</td>
+                    <td>{position}</td>
+                </tr>
+            )
+        })
+    }
 
     render() {
         return <>
@@ -135,6 +176,7 @@ class Results extends React.Component {
             </div>
         </>
     }
+    */
 }
 
 export default Results;

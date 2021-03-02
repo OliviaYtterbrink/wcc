@@ -67,9 +67,10 @@ class About extends React.Component {
             <div>
                 <h2>Waterdance is doing her own personal challenge of playing every League of Legends Champion at least once with no repeats and in alphabetical order! Started 1/27/2021!</h2>
                 <ProgressBar key='progress' bgcolor="#6a1b9a" completed={this.state.completed} />
+                <h3>Unless advice is asked for, please keep your thoughts on builds to yourself. This challenge is not concerned with playing every champion perfectly.</h3>
             </div>
         </>
     }
 }
-
+// <h3>Unless advice is asked for, please keep your thoughts on builds to yourself.<br/> This challenge is not concerned with playing every champion perfectly.</h3>
 export default About;
