@@ -1,4 +1,5 @@
 import React from 'react';
+import "../styles/App.css";
 import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "@material-ui/lab/TabPanel";
 import Tab from "@material-ui/core/Tab";
@@ -7,6 +8,7 @@ import TabList from "@material-ui/lab/TabList";
 import Results from "./Results";
 import Challenge from "./Challenge"
 import About from "./About"
+import DarkMode from "../elements/DarkMode"
 
 class MainPage extends React.Component {
     constructor(props) {
@@ -27,6 +29,7 @@ class MainPage extends React.Component {
                             <Tab label="Results" value="results" />
                         </TabList>
                     </AppBar>
+                    <DarkMode />
                     <TabPanel value="about"><About user={this.props.user} /></TabPanel>
                     <TabPanel value="next"><Challenge user={this.props.user} /></TabPanel>
                     <TabPanel value="results"><Results user={this.props.user} /></TabPanel>

@@ -1,4 +1,5 @@
 import React from 'react';
+import "../styles/App.css";
 import settings from '../config/settings';
 import Pagination from "@material-ui/lab/Pagination";
 
