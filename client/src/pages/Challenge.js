@@ -15,7 +15,8 @@ class Challenge extends React.Component {
                 { number: 1, champion: '...' }
             ],
             page: 1,
-            rowCount: 0
+            rowCount: 0,
+            playedCount: 0
         };
         this.alert = React.createRef();
     }
@@ -23,6 +24,7 @@ class Challenge extends React.Component {
     componentDidMount() {
         this.fetchResultsCount();
         this.fetchResults();
+        this.fetchPlayedCount();
     }
 
     pageCount() {
@@ -42,6 +44,14 @@ class Challenge extends React.Component {
 
         axios.get(`${apiBaseURL}/challenge/Waterdance/nextCount`)
             .then(resp => this.setState(state => ({...state, rowCount: resp.data[0].count})))
+            .catch(this.handleError.bind(this));
+    }
+
+    fetchPlayedCount() {
+        this.setState(state => ({...state, rowCount: 0}));
+
+        axios.get(`${apiBaseURL}/challenge/Waterdance/playedCount`)
+            .then(resp => this.setState(state => ({...state, playedCount: resp.data[0].count})))
             .catch(this.handleError.bind(this));
     }
 
@@ -74,10 +84,17 @@ class Challenge extends React.Component {
     renderTableData() {
         return this.state.games.map((game, index) => {
             const { champion } = game //destructuring
+            var total = (this.state.rowCount) + (this.state.playedCount)
+            var number = (index+1)+10*(this.state.page-1)
+            var x = (this.state.playedCount+number)/total
+            console.log("total: " + total)
+            console.log("number: " + number)
+            console.log("x: " + x)
             return (
                 <tr key={champion}>
-                    <td>{(index+1)+10*(this.state.page-1)}</td>
+                    <td>{number}</td>
                     <td>{champion}</td>
+                    <td>{Math.round((x)*1000)/10}%</td>
                 </tr>
            )
         })
@@ -92,6 +109,7 @@ class Challenge extends React.Component {
                         <tr>
                             <th key='0'>NUMBER</th>
                             <th key='1'>CHAMPION</th>
+                            <th key='2'>DONE</th>
                         </tr>
                         {this.renderTableData()}
                     </tbody>
