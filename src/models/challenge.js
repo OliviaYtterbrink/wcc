@@ -10,7 +10,7 @@ const championsToPlayNext = function (session, user, skip, limit) {
             WHERE NOT EXISTS {
                 MATCH (c)-[:PLAYED]-(g:Game)-[:AS]-(h:Champion) WHERE h.name = r.name
             }
-            RETURN r.name AS champion ORDER BY r.name
+            RETURN r.name AS champion ORDER BY r.prio, r.name
             SKIP $skip 
             LIMIT $limit`,
             {summoner: user, challenge: `Waterdance Champion Challenge`, skip: int(skip), limit: int(limit)})
