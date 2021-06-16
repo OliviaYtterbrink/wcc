@@ -50,6 +50,7 @@ api.get("/challenge/:summoner/next", routes.challenge.getNext);
 api.get("/challenge/:summoner/nextCount", routes.challenge.getNextCount);
 api.get("/challenge/:summoner/results", routes.challenge.championsPlayed);
 api.get("/challenge/:summoner/playedCount", routes.challenge.playedCount);
+api.get("/challenge/:summoner/positionsPlayed", routes.challenge.positionsPlayed);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

@@ -37,3 +37,11 @@ exports.playedCount = function (req, res, next) {
            .then(response => writeResponse(res, response))
            .catch(next);
 }
+
+exports.positionsPlayed = function (req, res, next) {
+  const summoner = req.params.summoner;
+  if (!summoner) throw {message: 'Invalid summoner name.', status: 400};
+  Challenge.positionsPlayed(dbUtils.getSession(req), summoner)
+           .then(response => writeResponse(res, response))
+           .catch(next);
+}

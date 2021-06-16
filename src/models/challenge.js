@@ -69,9 +69,25 @@ const championsPlayedCount = function (session, user) {
     })));
 };
 
+// get positions played
+const positionsPlayed = function (session, user) {
+    return session.readTransaction(txc =>
+        txc.run(
+            `MATCH (s:Summoner)-[:DOING]->(c:Challenge)
+            WHERE s.name = $summoner AND c.name = $challenge AND c.completed = false
+            MATCH (c)-[:PLAYED]->(g:Game)-[:AS]->(h:Champion)
+            RETURN g.position AS position, count(*) AS count ORDER BY count DESC`,
+            {summoner: user, challenge: `Waterdance Champion Challenge`})
+        ).then(result => result.records.map(r => ({
+            position: r.get('position'),
+            count: r.get('count')
+    })));
+};
+
 module.exports = {
     championsToPlayNext: championsToPlayNext,
     championsToPlayNextCount: championsToPlayNextCount,
     championsPlayed: championsPlayed,
-    championsPlayedCount: championsPlayedCount
+    championsPlayedCount: championsPlayedCount,
+    positionsPlayed: positionsPlayed
 };
